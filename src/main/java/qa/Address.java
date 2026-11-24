@@ -18,20 +18,41 @@ public class Address {
             IUserAccountDb userAccountDb) {
 
         this.userAccountDb = userAccountDb;
+
+        // Validate house number: 12 or 11-15
+        if (number == null ||
+                !number.matches("[0-9]+(-[0-9]+)?")) {
+            throw new InvalidUKAddressException(
+                "Invalid house or flat number."
+            );
+        }
+
+        // Address line must not be null
+        if (addressLine == null) {
+            throw new InvalidUKAddressException(
+                "Address line cannot be null."
+            );
+        }
+
+        // City must exist in the supported cities database
+        if (!isValidCity(city)) {
+            throw new InvalidUKAddressException(
+                "City is not recognised."
+            );
+        }
+
+        // Postcode must be valid and non-null
+        if (postCode == null ||
+                !Utils.isValidUKPostCode(postCode)) {
+            throw new InvalidUKAddressException(
+                "Invalid UK postcode."
+            );
+        }
+
         this.number = number;
         this.addressLine = addressLine;
-
-        if (isValidCity(city)) {
-            this.city = city;
-        } else {
-            throw new IllegalArgumentException();
-        }
-
-        if (Utils.isValidUKPostCode(postCode)) {
-            this.postCode = postCode;
-        } else {
-            throw new IllegalArgumentException();
-        }
+        this.postCode = postCode;
+        this.city = city;
     }
 
     public boolean isValidCity(String city) {
