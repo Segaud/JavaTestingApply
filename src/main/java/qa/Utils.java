@@ -7,7 +7,7 @@ import java.util.regex.Pattern;
 public class Utils {
 
     public static boolean isAlphabetic(String inputString) {
-        return inputString.matches("[a-zA-Z]+");
+        return inputString != null && inputString.matches("[a-zA-Z]+");
     }
 
     public static boolean isNumeric(String inputString) {
@@ -38,7 +38,7 @@ public class Utils {
     }
 
     public static boolean hasExtraPasswordChars(String inputString) {
-        String[] extraChars = { "$", "�", "%", "@", "?" };
+        String[] extraChars = { "~", "@", "%", "$", "£" };
 
         for (String s : extraChars) {
             if (inputString.contains(s)) {
@@ -56,5 +56,18 @@ public class Utils {
         Matcher matcher = pattern.matcher(postCode.trim());
 
         return matcher.matches();
+    }
+
+    public static boolean hasForbiddenPasswordChars(String inputString) {
+        String[] forbiddenChars = {
+            "<", ">", ";", "=", "'", "--"
+        };
+
+        for (String s : forbiddenChars) {
+            if (inputString.contains(s)) {
+                return true;
+            }
+        }
+        return false;
     }
 }
