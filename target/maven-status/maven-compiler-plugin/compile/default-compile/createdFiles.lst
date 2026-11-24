@@ -1,0 +1,6 @@
+qa/User.class
+qa/UserAccountManager.class
+qa/IUserAccountDb.class
+qa/UserAccountDBStub.class
+qa/Utils.class
+qa/Address.class
