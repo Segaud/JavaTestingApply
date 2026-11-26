@@ -24,11 +24,13 @@ public class User {
         this.address = address;
     }
 
+    
     private boolean isValidPasswordFormat(String password) {
-        return (
-            password != null &&
-            password.length() > 8 &&
-            Utils.hasExtraPasswordChars(password)
-        );
+        return password != null
+            && password.length() > 8
+            && Utils.hasOneDigit(password)
+            && Utils.hasExtraPasswordChars(password)
+            && !Utils.hasForbiddenPasswordChars(password);
     }
+
 }

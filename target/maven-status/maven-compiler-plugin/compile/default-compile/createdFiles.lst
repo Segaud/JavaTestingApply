@@ -1,6 +1,9 @@
 qa/User.class
 qa/UserAccountManager.class
+qa/InvalidUKAddressException.class
+qa/Address.class
 qa/IUserAccountDb.class
+qa/LoginException.class
 qa/UserAccountDBStub.class
 qa/Utils.class
-qa/Address.class
+qa/TooManyLoginTriesException.class

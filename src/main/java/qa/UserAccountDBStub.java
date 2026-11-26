@@ -5,46 +5,75 @@ import java.util.ArrayList;
 
 public class UserAccountDBStub implements IUserAccountDb {
 
-    // Database in memory
+    // Simulated database stored in memory
     ArrayList<String> cities;
     ArrayList<User> users;
 
-    public UserAccountDBStub() throws IllegalArgumentException {
-
+    public UserAccountDBStub() {
         users = new ArrayList<>();
         cities = new ArrayList<>();
 
-        // TODO: Seed the database in memory
-        // with cities and users.
+        // Seed recognised UK cities
+        cities.add("Edinburgh");
+        cities.add("Glasgow");
     }
 
+    // Return recognised cities
+    @Override
     public ArrayList<String> getCityNames() {
         return cities;
     }
 
+    // Check if username already exists (case-insensitive)
+    @Override
     public boolean isAnExistingUser(User user) {
 
-        // TODO: Check whether username exists
-        // in the users list.
-
-        return false;
-    }
-
-    public boolean isRegisteredUser(User user) {
-
-        // TODO: Check whether username and password
-        // exist in the users list.
-
-        return false;
-    }
-
-    public boolean register(User user) {
-
-        if (isAnExistingUser(user)) {
+        if (user == null) {
             return false;
         }
 
-        // TODO: Add user to the in-memory database.
+        for (User existingUser : users) {
+            if (existingUser.userName.equalsIgnoreCase(user.userName)) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    // Check username and password for authentication
+    @Override
+    public boolean isRegisteredUser(User user) {
+
+        if (user == null) {
+            return false;
+        }
+
+        for (User existingUser : users) {
+
+            boolean usernameMatches =
+                existingUser.userName.equalsIgnoreCase(user.userName);
+
+            boolean passwordMatches =
+                existingUser.password.equals(user.password);
+
+            if (usernameMatches && passwordMatches) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    // Register a new user
+    @Override
+    public boolean register(User user) {
+
+        if (user == null || isAnExistingUser(user)) {
+            return false;
+        }
+
+        users.add(user);
 
         return true;
     }
